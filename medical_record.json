@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1714050001",
+    "patient_name": "Abebe Bekele",
+    "age": 30,
+    "gender": "Male",
+    "diagnosis": "Hypertension",
+    "treatment": "Lisinopril 10mg",
+    "last_visit": "2024-04-20"
+  },
+  {
+    "id": "1714050002",
+    "patient_name": "Sara Tadesse",
+    "age": 25,
+    "gender": "Female",
+    "diagnosis": "Seasonal Allergies",
+    "treatment": "Loratadine",
+    "last_visit": "2024-04-22"
+  }
+]
