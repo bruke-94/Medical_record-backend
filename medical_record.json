@@ -16,5 +16,14 @@
     "diagnosis": "Seasonal Allergies",
     "treatment": "Loratadine",
     "last_visit": "2024-04-22"
+  },
+  {
+    "id": "1777123881668",
+    "patient_name": "Sara ",
+    "age": 25,
+    "gender": "Female",
+    "diagnosis": "Seasonal Allergies",
+    "treatment": "Loratadine",
+    "last_visit": "2024-04-22"
   }
 ]
