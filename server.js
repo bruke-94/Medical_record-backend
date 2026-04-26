@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "application/json");
   const { method, url } = req;
 
-  if (url === "/medical/" && method === "GET") {
+  if (url === "/medical" && method === "GET") {
     fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
         res.writeHead(500);
@@ -15,6 +15,21 @@ const server = http.createServer((req, res) => {
       }
       res.writeHead(200);
       res.end(data);
+    });
+  } else if (url.startsWith("/medical/") && method === "GET") {
+    const id = url.split("/")[2];
+
+    fs.readFile(filePath, "utf8", (err, data) => {
+      const records = JSON.parse(data || "[]");
+      const record = records.find((r) => r.id === id);
+
+      if (!record) {
+        res.writeHead(404);
+        return res.end(JSON.stringify({ error: "Record not found" }));
+      }
+
+      res.writeHead(200);
+      res.end(JSON.stringify(record));
     });
   } else if (url === "/medical" && method === "POST") {
     let body = "";
