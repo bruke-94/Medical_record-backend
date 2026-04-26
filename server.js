@@ -81,6 +81,34 @@ const server = http.createServer((req, res) => {
         });
       });
     });
+  } else if (url.startsWith("/medical/") && method === "DELETE") {
+    const id = url.split("/")[2];
+
+    fs.readFile(filePath, "utf8", (err, data) => {
+      let records = JSON.parse(data || "[]");
+
+      const index = records.findIndex((r) => r.id === id);
+
+      if (index === -1) {
+        res.writeHead(404);
+        return res.end(JSON.stringify({ error: "Record not found" }));
+      }
+
+      const deleted = records.splice(index, 1);
+
+      fs.writeFile(filePath, JSON.stringify(records, null, 2), (err) => {
+        res.writeHead(200);
+        res.end(
+          JSON.stringify({
+            message: "Deleted successfully",
+            data: deleted[0],
+          }),
+        );
+      });
+    });
+  } else {
+    res.writeHead(404);
+    res.end(JSON.stringify({ error: "Route not found" }));
   }
 });
 
