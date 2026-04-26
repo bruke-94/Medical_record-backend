@@ -52,6 +52,35 @@ const server = http.createServer((req, res) => {
         });
       });
     });
+  } else if (url.startsWith("/medical/") && method === "PUT") {
+    const id = url.split("/")[2];
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", () => {
+      const updatedData = JSON.parse(body);
+
+      fs.readFile(filePath, "utf8", (err, data) => {
+        let records = JSON.parse(data || "[]");
+
+        const index = records.findIndex((r) => r.id === id);
+
+        if (index === -1) {
+          res.writeHead(404);
+          return res.end(JSON.stringify({ error: "Record not found" }));
+        }
+
+        records[index] = { ...records[index], ...updatedData, id };
+
+        fs.writeFile(filePath, JSON.stringify(records, null, 2), (err) => {
+          res.writeHead(200);
+          res.end(JSON.stringify(records[index]));
+        });
+      });
+    });
   }
 });
 
